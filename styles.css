@@ -246,3 +246,17 @@ dialog{width:min(560px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:
 #quote-form .form-grid>label{grid-column:1/-1}
 #quote-form textarea{min-height:90px;max-height:150px}
 @media(max-width:760px){#quote-form .form-grid{gap:12px}#quote-form input,#quote-form select,#quote-form textarea{font-size:16px}#quote-form textarea{min-height:80px}}
+
+/* Menu mobile: transições reversíveis na abertura e no fechamento. */
+@media(max-width:760px){
+  .header #navigation{display:flex;flex-direction:column;align-items:stretch;gap:8px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-12px);max-height:calc(100dvh - var(--header));overflow-y:auto;transition:opacity .24s ease,transform .32s cubic-bezier(.22,1,.36,1),visibility 0s linear .32s}
+  .header #navigation.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);transition:opacity .3s ease,transform .4s cubic-bezier(.22,1,.36,1),visibility 0s}
+  .header #navigation>a{opacity:0;transform:translateY(-6px);transition:opacity .16s ease,transform .2s ease,color .2s;transition-delay:0s}
+  .header #navigation.open>a{opacity:1;transform:translateY(0);transition-duration:.28s,.35s,.2s;transition-delay:calc(var(--menu-order,0)*35ms + 45ms)}
+  .header #navigation>a:nth-child(2){--menu-order:1}
+  .header #navigation>a:nth-child(3){--menu-order:2}
+  .header #navigation>a:nth-child(4){--menu-order:3}
+  .header #navigation>a:nth-child(5){--menu-order:4}
+  .menu-toggle span{transition:transform .35s cubic-bezier(.22,1,.36,1);transform-origin:center}
+}
+@media(prefers-reduced-motion:reduce){.header #navigation,.header #navigation>a,.menu-toggle span{transition:none!important}}

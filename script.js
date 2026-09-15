@@ -4,16 +4,19 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const menuButton = document.querySelector('.menu-toggle');
   const navigation = document.querySelector('#navigation');
+  const desktopMenu = window.matchMedia('(min-width: 761px)');
   const setMenu = open => {
     menuButton.setAttribute('aria-expanded', String(open));
     menuButton.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
     navigation.classList.toggle('open', open);
+    navigation.inert = !open && !desktopMenu.matches;
   };
   menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
   navigation.addEventListener('click', event => { if (event.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && navigation.classList.contains('open')) { setMenu(false); menuButton.focus(); } });
   document.addEventListener('click', event => { if (!event.target.closest('.header')) setMenu(false); });
-  window.matchMedia('(min-width: 761px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
+  desktopMenu.addEventListener('change', () => setMenu(false));
+  setMenu(false);
   document.querySelector('#year').textContent = new Date().getFullYear();
 
   const imageValue = path => `url(${JSON.stringify(path)})`;
