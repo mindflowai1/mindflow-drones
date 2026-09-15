@@ -15,10 +15,10 @@
   widget.hidden = true;
   const icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.5-4.7a8.5 8.5 0 1 1 16-4.2Z"/><path d="M8.3 7.5c-.8.6-.9 1.6-.4 2.7 1.1 2.5 3 4.3 5.5 5.2 1.1.4 2 .1 2.5-.7l.4-1-2.5-1.2-.9 1c-1.4-.6-2.5-1.7-3.2-3l.9-.9-1.2-2.4Z"/></svg>';
   widget.innerHTML = `<section class="whatsapp-panel" id="whatsapp-panel" aria-labelledby="whatsapp-title" hidden>
-    <div class="whatsapp-heading"><span>${icon} AEROVISION</span><button class="whatsapp-close" type="button" aria-label="Recolher convite do WhatsApp">×</button></div>
+    <div class="whatsapp-heading"><span>${icon} AEROVISION</span><button class="whatsapp-close" type="button" aria-label="Recolher convite do WhatsApp"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div>
     <h2 id="whatsapp-title">Vamos dar um novo olhar ao seu projeto?</h2>
     <p>Converse sobre sua produção em Lagoa Santa e região.</p>
-    <a class="whatsapp-action" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp <span aria-hidden="true">↗</span></a>
+    <a class="whatsapp-action" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp <span aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a>
   </section><button class="whatsapp-launcher" type="button" aria-expanded="false" aria-controls="whatsapp-panel">${icon}<span>Vamos conversar?</span></button>`;
   document.body.append(widget);
   const panel = widget.querySelector('.whatsapp-panel');

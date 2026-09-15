@@ -228,3 +228,15 @@ dialog{width:min(560px,calc(100% - 32px));max-height:90dvh;overflow:auto;border:
 @keyframes whatsapp-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:760px){.whatsapp-widget{right:16px;bottom:max(16px,env(safe-area-inset-bottom));width:min(320px,calc(100vw - 32px))}.whatsapp-panel{padding:18px}.whatsapp-panel h2{font-size:23px}.whatsapp-launcher{font-size:11px;padding:10px 13px}}
 @media(prefers-reduced-motion:reduce){.whatsapp-widget,.whatsapp-panel{animation:none}}
+
+/* Icônes vetoriais: aparência consistente também no Safari/iOS. */
+.ui-icon{display:inline-block;width:18px;height:18px;flex-shrink:0;vertical-align:middle;color:inherit;pointer-events:none}
+.play-icon{flex-shrink:0}
+.play-icon .ui-icon,.round-play .ui-icon{width:15px;height:15px}
+.cap-icon .ui-icon,.service-symbol .ui-icon,.contact-details>div>span .ui-icon{width:26px;height:26px}
+.dialog-close,.whatsapp-close{display:grid;place-items:center}
+.dialog-close .ui-icon,.whatsapp-close .ui-icon{width:20px;height:20px}
+.hero-play-background,.step-back,.step-next{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.hero-play-background[hidden],.step-back[hidden],.step-next[hidden]{display:none}
+.whatsapp-widget .ui-icon{width:18px;height:18px;color:inherit}
+@media(max-width:760px){.actions .ui-icon{width:16px;height:16px}.actions .play-icon .ui-icon{width:13px;height:13px}.hero .showreel-link .ui-icon{width:15px;height:15px}}

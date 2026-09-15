@@ -44,7 +44,7 @@
     const playButton = document.createElement('button');
     playButton.type = 'button';
     playButton.className = 'hero-play-background';
-    playButton.textContent = '▶ Reproduzir fundo';
+    playButton.innerHTML = '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 5 11 7-11 7Z" fill="currentColor" stroke="none"/></svg> Reproduzir fundo';
     playButton.hidden = true;
     hero.append(playButton);
     let visible = hero.getBoundingClientRect().bottom > 0 && hero.getBoundingClientRect().top < innerHeight;
@@ -142,7 +142,7 @@
   const fieldLabels = [...quoteForm.querySelectorAll('.form-grid > label')];
   const stepActions = document.createElement('div');
   stepActions.className = 'step-actions';
-  stepActions.innerHTML = '<button type="button" class="step-back">← Voltar</button><span class="step-label">01 / 02</span><button type="button" class="step-next">Próximo ↗</button>';
+  stepActions.innerHTML = '<button type="button" class="step-back"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12H4m6-6-6 6 6 6"/></svg> Voltar</button><span class="step-label">01 / 02</span><button type="button" class="step-next">Próximo <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6M6 6h12v12"/></svg></button>';
   quoteForm.querySelector('.form-grid').after(stepActions);
   let formStep = 0;
   const renderFormStep = () => {
