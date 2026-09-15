@@ -136,65 +136,31 @@
     openDialog(document.querySelector('#video-dialog'));
     video.play().catch(() => {});
   });
-  // No celular, duas etapas mantêm o formulário confortável dentro da tela.
-  const compactForm = window.matchMedia('(max-width: 760px)');
-  const quoteForm = document.querySelector('#quote-form');
-  const fieldLabels = [...quoteForm.querySelectorAll('.form-grid > label')];
-  const stepActions = document.createElement('div');
-  stepActions.className = 'step-actions';
-  stepActions.innerHTML = '<button type="button" class="step-back"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12H4m6-6-6 6 6 6"/></svg> Voltar</button><span class="step-label">01 / 02</span><button type="button" class="step-next">Próximo <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6M6 6h12v12"/></svg></button>';
-  quoteForm.querySelector('.form-grid').after(stepActions);
-  let formStep = 0;
-  const renderFormStep = () => {
-    const mobile = compactForm.matches;
-    stepActions.hidden = !mobile;
-    fieldLabels.forEach((label, index) => { label.hidden = mobile && (formStep === 0 ? index > 2 : index < 3); });
-    document.querySelector('#submit-quote').hidden = mobile && formStep === 0;
-    stepActions.querySelector('.step-back').style.visibility = formStep ? 'visible' : 'hidden';
-    stepActions.querySelector('.step-next').hidden = formStep === 1;
-    stepActions.querySelector('.step-label').textContent = formStep ? '02 / 02' : '01 / 02';
-  };
-  stepActions.querySelector('.step-next').addEventListener('click', () => {
-    const phone = quoteForm.elements.phone;
-    phone.setCustomValidity(phone.value.replace(/\D/g, '').length >= 10 ? '' : 'Informe um telefone com DDD.');
-    if (!fieldLabels.slice(0, 3).every(label => label.querySelector('input').reportValidity())) return;
-    formStep = 1; renderFormStep(); document.querySelector('#service-select').focus({ preventScroll: true });
-  });
-  stepActions.querySelector('.step-back').addEventListener('click', () => { formStep = 0; renderFormStep(); quoteForm.elements.name.focus({ preventScroll: true }); });
-  compactForm.addEventListener('change', renderFormStep);
-  renderFormStep();
-  quoteForm.addEventListener('keydown', event => {
-    if (event.key === 'Enter' && compactForm.matches && formStep === 0 && event.target.tagName === 'INPUT') {
-      event.preventDefault(); stepActions.querySelector('.step-next').click();
-    }
-  });
   const whatsapp = String(config.whatsapp || '').replace(/\D/g, '');
   const hasWhatsApp = /^\d{12,15}$/.test(whatsapp);
   if (hasWhatsApp) {
     document.querySelector('#submit-quote').firstChild.textContent = 'Continuar no WhatsApp ';
-    document.querySelector('#form-note').textContent = 'Você revisa e envia a mensagem no WhatsApp.';
+    document.querySelector('#form-note').textContent = 'A mensagem será preenchida. Revise e toque em Enviar no WhatsApp.';
   }
   document.querySelector('#quote-form').addEventListener('submit', event => {
     event.preventDefault();
     const form = event.currentTarget;
-    const phone = form.elements.phone;
-    phone.setCustomValidity(phone.value.replace(/\D/g, '').length >= 10 ? '' : 'Informe um telefone com DDD.');
     if (!form.reportValidity()) return;
     const data = new FormData(form);
-    const lines = ['Olá, Aerovision! Gostaria de um orçamento.', '', `Nome: ${String(data.get('name')).trim()}`];
-    if (String(data.get('company')).trim()) lines.push(`Empresa: ${String(data.get('company')).trim()}`);
-    lines.push(`WhatsApp: ${data.get('phone')}`, `Projeto: ${data.get('service')}`, '', String(data.get('message')).trim());
+    const lines = ['Olá, Aerovision! Vim pelo site e gostaria de um orçamento para uma produção com drone.', '', `Nome: ${String(data.get('name')).trim()}`];
+    lines.push(`Tipo de projeto: ${data.get('service')}`);
+    const message = String(data.get('message') || '').trim();
+    if (message) lines.push('', message);
     const summary = lines.join('\n');
     if (hasWhatsApp) {
-      window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(summary)}`, '_blank', 'noopener,noreferrer');
-      document.querySelector('#form-feedback').textContent = 'Continue no WhatsApp para revisar e enviar seu pedido.';
+      document.querySelector('#form-feedback').textContent = 'No WhatsApp, revise a mensagem e toque em Enviar para concluir.';
+      window.location.assign(`https://wa.me/${whatsapp}?text=${encodeURIComponent(summary)}`);
     } else {
       document.querySelector('#quote-summary').value = summary;
       document.querySelector('#copy-status').textContent = '';
       openDialog(document.querySelector('#quote-dialog'));
     }
   });
-  document.querySelector('[name="phone"]').addEventListener('input', event => event.target.setCustomValidity(''));
   document.querySelector('#copy-quote').addEventListener('click', async () => {
     const summary = document.querySelector('#quote-summary');
     try {
